@@ -1,5 +1,3 @@
-# Tushuguan-Manger
-Book Management Application
+# Tushuguan-Manger UI
 
-# Naming
-"Library" => "Túshū guǎn" => "圖書館" => "图书馆"
+Book Management Application UI
