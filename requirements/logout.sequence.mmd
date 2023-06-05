@@ -1,0 +1,15 @@
+sequenceDiagram
+    autonumber
+    participant User
+    participant WebApp
+    participant BFF
+    participant IdP
+    
+    User->>+WebApp: Clicks Logout
+    WebApp->>+BFF: Initiate Logout
+    BFF->>+IdP: Logout
+    IdP->>IdP: Invalidate Tokens
+    IdP->>-BFF: Logout Sucess
+    BFF->>BFF: Removes Tokens, Closes Session
+    BFF->>-WebApp: Redirects to Home/Login Page
+    WebApp->>-User: Logged Out, Display Home/Login Page

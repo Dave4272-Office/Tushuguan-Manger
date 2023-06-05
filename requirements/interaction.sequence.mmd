@@ -1,0 +1,17 @@
+sequenceDiagram
+    autonumber
+    participant User
+    participant WebApp
+    participant BFF
+    participant Microservices
+    
+    loop User Interaction
+        User->>+WebApp: Interacts
+        WebApp->>+BFF: Load Page
+        BFF->>+Microservices: API Calls
+        Note over BFF,Microservices: sends tokens stored by BFF
+        Microservices->>Microservices: Verify Token, Role
+        Microservices->>-BFF: Response
+        BFF->>-WebApp: Response
+        WebApp->>-User: Display
+    end

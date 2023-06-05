@@ -1,0 +1,33 @@
+sequenceDiagram 
+    autonumber
+    participant User
+    participant WebApp
+    participant BFF
+    participant Microservices
+    participant IdP
+    
+    User->>+WebApp: Clicks Login
+    WebApp->>+BFF: Initiates Login
+    BFF->>+IdP: Redirect to IdP Login
+    IdP->>User: Login Page
+    Note over User: Gives Credentials
+    User->>IdP: Login Creds
+    alt Login Fails
+    loop till Login Success or User Cancels operation
+        IdP->>User: Login Failed
+        Note over User: Gives Credentials
+        User->>IdP: Login Creds
+    end
+    else Login Success
+    IdP->>-BFF: Id Token, Acess Token, Refresh Token
+    end
+    BFF->>BFF: Stores Token, Creates Session
+    Note over BFF: BFF Manages Session and Tokens
+    BFF->>-WebApp: Redirect to Library Home
+    WebApp->>+BFF: Load Page
+    BFF->>+Microservices: API Calls
+    Note over BFF,Microservices: sends tokens stored by BFF
+    Microservices->>Microservices: Verify Token, Role
+    Microservices->>-BFF: Response
+    BFF->>-WebApp: Response
+    WebApp->>-User: Display
